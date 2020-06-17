@@ -102,6 +102,7 @@ int main(){
 			    rectangle.height >= MIN_HEIGHT && rectangle.height <= MAX_HEIGHT)
 			{
 				std::cout << "\ty: " << rectangle.y << std::endl
+					  << "\tx: " << rectangle.x << std::endl
 				          << "\twidth: " << rectangle.width << std::endl
 				          << "\theight: " << rectangle.height << std::endl << std::endl;
 
