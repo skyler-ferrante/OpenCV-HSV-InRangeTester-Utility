@@ -16,3 +16,5 @@ Then add your HSV values in PhotoAnalyzer and run with:
     $./PHOTO_ANALYZER
 
 to test the given HSV values.
+
+PhotoAnalyzer will blur each image, convert them to hsv, and then run inRange on them. It will then find all contours in the image and put bounding boxes around them. Then it will give you information on each bounding box so you can tell if the HSV values you gave were correct for the object you were trying to filter for.
