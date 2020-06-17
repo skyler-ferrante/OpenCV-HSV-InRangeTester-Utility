@@ -1,0 +1,8 @@
+cmake_minimum_required( VERSION 2.8 )
+set (CMAKE_CXX_STANDARD 11)
+project( PHOTO_MANAGER )
+find_package( OpenCV REQUIRED )
+add_executable( PHOTO_MANAGER PhotoManager.cpp )
+add_executable( PHOTO_ANALYZER PhotoAnalyzer.cpp )
+target_link_libraries( PHOTO_MANAGER ${OpenCV_LIBS} )
+target_link_libraries( PHOTO_ANALYZER ${OpenCV_LIBS} )
