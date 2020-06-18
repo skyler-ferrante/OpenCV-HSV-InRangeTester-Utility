@@ -10,6 +10,9 @@
 #include <vector>
 #include <map>
 
+#define DEBUG
+
+//HSV inRange values
 static const auto HUE_MIN = 0u;
 static const auto HUE_MAX = 180u;
 static const auto SATURATION_MIN = 5u;
@@ -17,6 +20,7 @@ static const auto SATURATION_MAX = 160u;
 static const auto VALUE_MIN = 175u;
 static const auto VALUE_MAX = 255u;
 
+//Amount image will be blured
 static const auto BLUR_FACTOR = 8u;
 
 //Size bounds for rectangles
@@ -34,6 +38,7 @@ void Blur(cv::Mat& image){
 }
 
 void ConvertToHSV(cv::Mat& image){
+	//Might be cv::COLOR_RGB2HSV depending on camera
 	cv::cvtColor(image, image, cv::COLOR_BGR2HSV);
 }
 
@@ -59,7 +64,9 @@ int main(){
 		return -1;
 	}
 
-	std::map<std::string, cv::Rect> finalRectangles;
+	#ifdef DEBUG
+	cv::namedWindow("Display window",cv::WINDOW_AUTOSIZE);
+	#endif
 
 	for (const auto& pictureName : pictureNames)
 	{
@@ -72,7 +79,13 @@ int main(){
 		ConvertToHSV(image);
 		FilterRange(image);
 		//Image is now binary
-	
+		
+		//If debug is defined then show all images
+		#ifdef DEBUG
+		cv::imshow("Display window",image);
+		cv::waitKey(0);
+		#endif
+
 		//Find all the pieces/contours that are left from the inRange
 		std::vector<std::vector<cv::Point> > contours;
 		cv::findContours(image, contours, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE);
@@ -95,6 +108,12 @@ int main(){
 		
 
 		std::cout << pictureName << ": "<<std::endl;
+
+		#ifdef DEBUG
+		cv::rectangle(image,boundingRectangles.at(0),cv::Scalar(255,255,255));
+		cv::imshow("Display window",image);
+		cv::waitKey(0);
+		#endif
 
 		for (const auto& rectangle : boundingRectangles)
 		{
